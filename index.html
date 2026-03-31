@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desapego Board Games</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f4f5;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+        .sold-out {
+            filter: grayscale(100%);
+            opacity: 0.8;
+        }
+        /* Padrão de fundo divertido para o cabeçalho */
+        .bg-pattern {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.2) 2px, transparent 2px);
+            background-size: 30px 30px;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased flex flex-col min-h-screen">
+
+    <!-- VIEW DA LOJA -->
+    <div id="view-store" class="flex flex-col min-h-screen flex-grow">
+        <!-- Header Divertido -->
+        <header class="relative bg-gradient-to-r from-violet-600 via-fuchsia-600 to-orange-500 overflow-hidden shadow-lg mb-10">
+            <div class="absolute inset-0 bg-pattern opacity-30"></div>
+            <div class="relative max-w-4xl mx-auto py-16 px-4 text-center text-white">
+                <h1 class="text-5xl md:text-5xl font-extrabold mb-4 drop-shadow-md tracking-tight">
+                    🎲 VENDA DE BOARD GAMES 🧩
+                </h1>
+                <p class="text-xl md:text-2xl font-medium mb-8 drop-shadow-sm opacity-90">
+                    Jogos incríveis procurando uma nova mesa!
+                </p>
+                
+                <a href="https://wa.me/5562983358686?text=Olá!%20Vim%20pela%20página%20de%20vendas%20de%20board%20games." 
+                target="_blank" rel="noopener noreferrer"
+                class="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-lg font-bold rounded-full text-violet-700 bg-white hover:bg-transparent hover:text-white transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1">
+                    <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                    </svg>
+                    Falar no WhatsApp
+                </a>
+            </div>
+        </header>
+
+        <!-- Container dos Jogos -->
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 flex-grow">
+            <div id="games-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Os jogos serão renderizados aqui pelo JavaScript -->
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-white py-8 text-center border-t-4 border-violet-600 mt-auto">
+            <p class="text-sm text-gray-400 mb-2">📍 Os jogos estão em Goiânia/Anápolis (GO).</p>
+            <p class="text-sm text-gray-400">Dúvidas? <a href="https://wa.me/5562983358686" class="text-violet-400 font-bold hover:underline">Chame no WhatsApp</a></p>
+        </footer>
+    </div>
+
+    <!-- VIEW DE LOGIN -->
+    <div id="view-login" class="hidden flex flex-col min-h-screen bg-gray-100 items-center justify-center flex-grow w-full px-4">
+        <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-200 w-full max-w-md">
+            <div class="text-center mb-8">
+                <span class="text-4xl">🔐</span>
+                <h2 class="text-2xl font-bold text-gray-800 mt-2">Acesso Restrito</h2>
+                <p class="text-gray-500 text-sm mt-1">Insira suas credenciais para gerenciar a loja.</p>
+            </div>
+
+            <form id="login-form" onsubmit="attemptLogin(event)" class="space-y-5">
+                <div id="login-error" class="hidden bg-red-50 text-red-600 p-3 rounded-lg text-sm border border-red-200 text-center">
+                    Usuário ou senha incorretos.
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Usuário</label>
+                    <input type="text" id="login-user" required class="w-full rounded-lg border-gray-300 shadow-sm focus:border-violet-500 focus:ring-violet-500 p-3 border bg-gray-50 focus:bg-white transition">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Senha</label>
+                    <input type="password" id="login-pass" required class="w-full rounded-lg border-gray-300 shadow-sm focus:border-violet-500 focus:ring-violet-500 p-3 border bg-gray-50 focus:bg-white transition">
+                </div>
+                <div class="pt-2 flex flex-col gap-3">
+                    <button type="submit" class="w-full px-5 py-3 bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition font-bold shadow-md">Entrar</button>
+                    <button type="button" onclick="window.location.hash = ''; switchView('store')" class="w-full px-5 py-3 bg-white text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition font-medium">Voltar à Loja</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- VIEW DO PAINEL ADMIN -->
+    <div id="view-admin" class="hidden flex flex-col min-h-screen bg-gray-100 flex-grow w-full">
+        <header class="bg-gray-900 text-white p-4 shadow-md flex justify-between items-center sticky top-0 z-10">
+            <div class="flex items-center gap-3">
+                <span class="text-2xl">⚙️</span>
+                <h1 class="text-xl md:text-2xl font-bold">Painel Administrativo</h1>
+            </div>
+            <div class="flex items-center gap-2">
+                <button onclick="window.location.hash = ''; switchView('store')" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md transition font-medium text-sm flex items-center gap-2 shadow-sm">
+                    Ver Loja
+                </button>
+                <button onclick="logout()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition font-medium text-sm flex items-center gap-2 shadow-sm">
+                    Sair
+                </button>
+            </div>
+        </header>
+
+        <div class="p-4 md:p-8 flex-grow max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+            <!-- Coluna Esquerda: Formulário -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 lg:col-span-1 lg:sticky lg:top-24">
+                <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2" id="form-title">
+                    <svg class="w-5 h-5 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    Adicionar Novo Jogo
+                </h3>
+                <form id="game-form" class="space-y-4">
+                    <input type="hidden" id="game-id">
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Nome do Jogo</label>
+                        <input type="text" id="game-name" required class="w-full rounded-lg border-gray-300 shadow-sm focus:border-violet-500 focus:ring-violet-500 p-2.5 border bg-gray-50 focus:bg-white transition">
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Preço (R$)</label>
+                            <input type="number" id="game-price" required class="w-full rounded-lg border-gray-300 shadow-sm focus:border-violet-500 focus:ring-violet-500 p-2.5 border bg-gray-50 focus:bg-white transition" placeholder="240">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Condição</label>
+                            <select id="game-condition" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-violet-500 focus:ring-violet-500 p-2.5 border bg-gray-50 focus:bg-white transition">
+                                <option value="NOVO">NOVO</option>
+                                <option value="LACRADO">LACRADO</option>
+                                <option value="USADO">USADO</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Novo Campo: Imagem -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">URL da Capa do Jogo (Opcional)</label>
+                        <input type="url" id="game-image" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-violet-500 focus:ring-violet-500 p-2.5 border bg-gray-50 focus:bg-white transition text-sm" placeholder="https://exemplo.com/imagem.jpg">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Link BGG</label>
+                        <input type="url" id="game-bgg" required class="w-full rounded-lg border-gray-300 shadow-sm focus:border-violet-500 focus:ring-violet-500 p-2.5 border bg-gray-50 focus:bg-white transition text-sm" placeholder="https://boardgamegeek.com/...">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Link OLX (Opcional)</label>
+                        <input type="url" id="game-olx" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-violet-500 focus:ring-violet-500 p-2.5 border bg-gray-50 focus:bg-white transition text-sm" placeholder="Deixe vazio para WhatsApp">
+                    </div>
+
+                    <div class="flex justify-end gap-3 pt-4 border-t border-gray-100 mt-6">
+                        <button type="button" onclick="resetForm()" class="px-5 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition font-medium w-1/3">Limpar</button>
+                        <button type="submit" class="px-5 py-2.5 bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition font-bold shadow-md w-2/3">Salvar</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Coluna Direita: Lista de Jogos -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden lg:col-span-2">
+                <div class="p-6 border-b border-gray-100 bg-gray-50">
+                    <h3 class="text-xl font-bold text-gray-800">Catálogo de Jogos</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Jogo</th>
+                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Preço</th>
+                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-4 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-games-list" class="bg-white divide-y divide-gray-100">
+                            <!-- Preenchido via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const WHATSAPP_NUM = "5562983358686";
+        let isAuthenticated = false; // Controle de sessão básico
+            
+        // Dados Iniciais
+        const initialGames = [
+            { id: 1, name: "Fantastiqa: The Rucksack Edition", price: 240, condition: "NOVO", bggLink: "https://boardgamegeek.com/boardgame/125046/fantastiqa-the-rucksack-edition", olxLink: "", imageUrl: null, sold: false },
+            { id: 2, name: "Foodies", price: 220, condition: "LACRADO", bggLink: "https://boardgamegeek.com/boardgame/280896/foodies", olxLink: "https://go.olx.com.br/grande-goiania-e-anapolis/hobbies-e-colecoes/foodies-1490390395", imageUrl: null, sold: false },
+            { id: 3, name: "Wyatt Earp", price: 200, condition: "LACRADO", bggLink: "https://boardgamegeek.com/boardgame/878/wyatt-earp", olxLink: "https://go.olx.com.br/grande-goiania-e-anapolis/hobbies-e-colecoes/wyatt-earp-1490390827", imageUrl: null, sold: false },
+            { id: 4, name: "Arkwright: The Card Game", price: 300, condition: "LACRADO", bggLink: "https://boardgamegeek.com/boardgame/300664/arkwright-the-card-game", olxLink: "https://go.olx.com.br/grande-goiania-e-anapolis/hobbies-e-colecoes/arkwright-the-card-game-1490392218", imageUrl: null, sold: false },
+            { id: 5, name: "Lindisfarne", price: 110, condition: "LACRADO", bggLink: "https://boardgamegeek.com/boardgame/254017/lindisfarne", olxLink: "https://go.olx.com.br/grande-goiania-e-anapolis/hobbies-e-colecoes/lindisfarne-1486188343", imageUrl: null, sold: false },
+            { id: 6, name: "Harald", price: 90, condition: "LACRADO", bggLink: "https://boardgamegeek.com/boardgame/182638/harald", olxLink: "https://go.olx.com.br/grande-goiania-e-anapolis/hobbies-e-colecoes/harald-1490395551", imageUrl: null, sold: false }
+        ];
+
+        // Carrega do LocalStorage ou usa o inicial
+        let games = JSON.parse(localStorage.getItem('boardgames_data')) || initialGames;
+
+        // Salva no LocalStorage
+        function saveGames() {
+            localStorage.setItem('boardgames_data', JSON.stringify(games));
+            renderGames();
+            if (isAuthenticated) {
+                renderAdminList();
+            }
+        }
+
+        // Função de Login Estático
+        function attemptLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('login-user').value;
+            const pass = document.getElementById('login-pass').value;
+            
+            // Credenciais ofuscadas em Base64 para não ficarem expostas diretamente no código fonte
+            // 'bWVzdHJlZmVycmVpcm8=' corresponde a 'mestreferreiro' | 'MTk3MzQ2JCRCZ2c=' corresponde a '197346$$Bgg'
+            if (btoa(user) === 'bWVzdHJlZmVycmVpcm8=' && btoa(pass) === 'MTk3MzQ2JCRCZ2c=') {
+                isAuthenticated = true;
+                document.getElementById('login-error').classList.add('hidden');
+                document.getElementById('login-user').value = '';
+                document.getElementById('login-pass').value = '';
+                switchView('admin');
+            } else {
+                document.getElementById('login-error').classList.remove('hidden');
+            }
+        }
+
+        // Função de Logout
+        function logout() {
+            isAuthenticated = false;
+            window.location.hash = '';
+            switchView('store');
+        }
+
+        // Função principal de Renderização da Loja
+        function renderGames() {
+            const container = document.getElementById('games-container');
+            container.innerHTML = '';
+
+            for (let i = 0; i < games.length; i++) {
+                const game = games[i];
+
+                // Usa a imagem definida ou o placeholder com o nome do jogo
+                const imgSource = game.imageUrl || `https://placehold.co/600x400/6d28d9/ffffff?text=${encodeURIComponent(game.name)}`;
+                const conditionColor = game.condition === 'NOVO' ? 'bg-blue-100 text-blue-800' : (game.condition === 'LACRADO' ? 'bg-green-100 text-green-800' : 'bg-orange-100 text-orange-800');
+                
+                let buyButtonHtml = '';
+                
+                if (game.sold) {
+                    buyButtonHtml = `<button disabled class="w-full text-center px-4 py-3 rounded-md shadow-sm text-sm font-bold text-gray-500 bg-gray-200 cursor-not-allowed uppercase">Vendido</button>`;
+                } else if (game.olxLink) {
+                    buyButtonHtml = `<a href="${game.olxLink}" target="_blank" class="w-full text-center px-4 py-3 border border-transparent rounded-md shadow-sm text-sm font-bold text-white bg-purple-600 hover:bg-purple-700 transition">Comprar na OLX</a>`;
+                } else {
+                    const msg = encodeURIComponent(`Olá! Tenho interesse no jogo ${game.name} por R$ ${game.price},00.`);
+                    buyButtonHtml = `<a href="https://wa.me/${WHATSAPP_NUM}?text=${msg}" target="_blank" class="w-full text-center px-4 py-3 border border-transparent rounded-md shadow-sm text-sm font-bold text-white bg-green-600 hover:bg-green-700 transition">Comprar via WhatsApp</a>`;
+                }
+
+                const cardHtml = `
+                    <article class="bg-white rounded-2xl border border-gray-100 overflow-hidden flex flex-col transition-all duration-300 card-hover ${game.sold ? 'sold-out' : ''}">
+                        <div class="h-64 bg-gray-100 relative flex items-center justify-center p-4">
+                            <img src="${imgSource}" alt="${game.name}" class="max-w-full max-h-full object-contain drop-shadow-lg rounded-md">
+                            ${!game.sold ? `<span class="absolute top-4 right-4 ${conditionColor} text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">${game.condition}</span>` : ''}
+                            ${game.sold ? `<div class="absolute inset-0 bg-black/50 flex items-center justify-center"><span class="bg-red-600 text-white text-xl font-black px-6 py-2 rounded-lg transform -rotate-12 border-4 border-white shadow-xl">VENDIDO</span></div>` : ''}
+                        </div>
+                        <div class="p-6 flex-grow flex flex-col">
+                            <h2 class="text-xl font-bold text-gray-900 mb-2 leading-tight">${game.name}</h2>
+                            <div class="mt-auto pt-4 border-t border-gray-100">
+                                <p class="text-3xl font-black text-gray-900 mb-5">R$ ${game.price}<span class="text-lg text-gray-400 font-medium">,00</span></p>
+                                <div class="flex flex-col space-y-3">
+                                    ${buyButtonHtml}
+                                    <a href="${game.bggLink}" target="_blank" class="w-full text-center px-4 py-2 border border-gray-200 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition flex items-center justify-center gap-2">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.326 18.266l-4.326-2.314-4.326 2.314.826-4.818-3.5-3.411 4.837-.703 2.163-4.381 2.163 4.381 4.837.703-3.5 3.411.826 4.818z"/></svg>
+                                        Ver no BGG
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                `;
+                container.innerHTML += cardHtml;
+            }
+
+            if(games.length === 0) {
+                container.innerHTML = `<div class="col-span-full text-center py-10 text-gray-500 text-lg">Nenhum jogo cadastrado no momento.</div>`;
+            }
+        }
+
+        /* ----- CONTROLE DE VIEWS ----- */
+        function switchView(view) {
+            const storeView = document.getElementById('view-store');
+            const adminView = document.getElementById('view-admin');
+            const loginView = document.getElementById('view-login');
+            
+            // Oculta todas
+            storeView.classList.add('hidden');
+            adminView.classList.add('hidden');
+            loginView.classList.add('hidden');
+            
+            if (view === 'login') {
+                if (isAuthenticated) {
+                    adminView.classList.remove('hidden');
+                    renderAdminList();
+                } else {
+                    loginView.classList.remove('hidden');
+                }
+            } else if (view === 'admin') {
+                if (!isAuthenticated) {
+                    loginView.classList.remove('hidden');
+                } else {
+                    adminView.classList.remove('hidden');
+                    renderAdminList();
+                }
+            } else {
+                storeView.classList.remove('hidden');
+                renderGames();
+            }
+            window.scrollTo(0,0);
+        }
+
+        /* ----- FUNÇÕES DO PAINEL ADMIN ----- */
+        function renderAdminList() {
+            const tbody = document.getElementById('admin-games-list');
+            tbody.innerHTML = '';
+            
+            games.forEach(game => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-50 transition-colors";
+                tr.innerHTML = `
+                    <td class="px-6 py-4 text-sm font-medium text-gray-900">
+                        <div class="flex items-center gap-3">
+                            ${game.imageUrl ? `<img src="${game.imageUrl}" class="w-10 h-10 object-cover rounded shadow-sm">` : `<div class="w-10 h-10 bg-gray-200 rounded text-xs flex items-center justify-center text-gray-400">Sem Foto</div>`}
+                            <span class="truncate max-w-[150px] md:max-w-xs" title="${game.name}">${game.name}</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-medium">R$ ${game.price}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <button onclick="toggleSold(${game.id})" class="px-3 py-1 inline-flex text-xs leading-5 font-bold rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 ${game.sold ? 'bg-red-100 text-red-800 hover:bg-red-200 focus:ring-red-500' : 'bg-green-100 text-green-800 hover:bg-green-200 focus:ring-green-500'}" title="Clique para alterar status">
+                            ${game.sold ? '🔴 Vendido' : '🟢 Disponível'}
+                        </button>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-end gap-2">
+                        <button onclick="editGame(${game.id})" class="text-indigo-600 hover:text-indigo-900 bg-indigo-50 hover:bg-indigo-100 px-3 py-1.5 rounded transition-colors">Editar</button>
+                        <button onclick="deleteGame(${game.id})" class="text-red-600 hover:text-red-900 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded transition-colors">Excluir</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+            
+            if(games.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" class="px-6 py-8 text-center text-gray-500">Nenhum jogo cadastrado. Adicione seu primeiro jogo!</td></tr>';
+            }
+        }
+
+        document.getElementById('game-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const idInput = document.getElementById('game-id').value;
+            const imgUrlInput = document.getElementById('game-image').value.trim();
+            
+            const gameData = {
+                id: idInput ? parseInt(idInput) : Date.now(),
+                name: document.getElementById('game-name').value,
+                price: parseFloat(document.getElementById('game-price').value),
+                condition: document.getElementById('game-condition').value,
+                bggLink: document.getElementById('game-bgg').value,
+                olxLink: document.getElementById('game-olx').value,
+                imageUrl: imgUrlInput !== "" ? imgUrlInput : null,
+                sold: false
+            };
+
+            if (idInput) {
+                const existingGame = games.find(g => g.id === gameData.id);
+                gameData.sold = existingGame.sold;
+                const index = games.findIndex(g => g.id === gameData.id);
+                games[index] = gameData;
+            } else {
+                games.push(gameData);
+            }
+
+            saveGames();
+            resetForm();
+        });
+
+        function editGame(id) {
+            const game = games.find(g => g.id === id);
+            if (!game) return;
+            
+            document.getElementById('form-title').innerHTML = `<svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg> Editar Jogo`;
+            document.getElementById('game-id').value = game.id;
+            document.getElementById('game-name').value = game.name;
+            document.getElementById('game-price').value = game.price;
+            document.getElementById('game-condition').value = game.condition;
+            document.getElementById('game-image').value = game.imageUrl || '';
+            document.getElementById('game-bgg').value = game.bggLink;
+            document.getElementById('game-olx').value = game.olxLink || '';
+            
+            // Scroll para o formulário
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function deleteGame(id) {
+            if(confirm("Tem certeza que deseja excluir este jogo?")) {
+                games = games.filter(g => g.id !== id);
+                saveGames();
+            }
+        }
+
+        function toggleSold(id) {
+            const game = games.find(g => g.id === id);
+            if (game) {
+                game.sold = !game.sold;
+                saveGames();
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('game-form').reset();
+            document.getElementById('game-id').value = '';
+            document.getElementById('form-title').innerHTML = `<svg class="w-5 h-5 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg> Adicionar Novo Jogo`;
+        }
+
+        // Roteamento Oculto pelo Hash da URL
+        function checkHashRoute() {
+            if (window.location.hash === '#admin') {
+                switchView('login');
+            } else {
+                switchView('store');
+            }
+        }
+
+        // Monitora mudanças na URL (quando digita #admin)
+        window.addEventListener('hashchange', checkHashRoute);
+
+        // Inicializa a página
+        window.onload = () => {
+            renderGames();
+            checkHashRoute();
+        };
+
+    </script>
+</body>
+</html>
